@@ -1,0 +1,32 @@
+{
+  "name": "pokedex-fullstack-app",
+  "version": "1.0.0",
+  "description": "server and cliend sides for Pokedex application",
+  "main": "index.js",
+  "scripts": {
+    "initDb": "node initDB.js",
+    "client-install": "npm install --prefix pokedex-frontend",
+    "client": "npm start --prefix pokedex-frontend",
+    "server": "nodemon server.js",
+    "dev": "concurrently \"npm run server\" \"npm run client\""
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/DanilRostov/training-august2018-node.git"
+  },
+  "author": "Danil Rostov",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/DanilRostov/training-august2018-node/issues"
+  },
+  "homepage": "https://github.com/DanilRostov/training-august2018-node#readme",
+  "devDependencies": {
+    "nodemon": "^1.18.3"
+  },
+  "dependencies": {
+    "concurrently": "^3.6.1",
+    "express": "^4.16.3",
+    "moment": "^2.22.2",
+    "mongoose": "^5.2.9"
+  }
+}

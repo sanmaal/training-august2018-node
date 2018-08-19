@@ -1,0 +1,1 @@
+Client side of application pokedex
