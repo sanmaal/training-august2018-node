@@ -1,10 +1,11 @@
 const express = require('express');
 const router = express.Router();
 const Pokemon = require('../models/pokemon');
-const generateIds = require('../utils/routeUtils');
+const generateIds = require('../utils/pokemons');
+const checkToken = require('../utils/auth');
 
 // GET POKEMONS LIST BY QUERIES
-router.get('/', (req, res) => {
+router.get('/pokemons', (req, res) => {
   res.header("Access-Control-Allow-Origin", "*");
   if (req.query._start && req.query._limit) {
     const ids = generateIds(req.query._start, req.query._limit);
@@ -16,7 +17,7 @@ router.get('/', (req, res) => {
 });
 
 // GET POKEMON BY ID
-router.get('/:id', (req, res) => {
+router.get('/pokemon/:id', (req, res) => {
   if (req.params.id) {
     const pokemonId = req.params.id;
     Pokemon.find({ id: pokemonId })

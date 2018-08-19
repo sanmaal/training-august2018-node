@@ -7,7 +7,7 @@ router.use(bodyParser.json());
 const User = require('../models/user');
 
 // CREATE USER
-router.post('/', (req, res) => {
+router.post('/user', (req, res) => {
   User.create({
     name: req.body.name,
     email: req.body.email,
@@ -21,7 +21,7 @@ router.post('/', (req, res) => {
 });
 
 // RETURN ALL THE USERS
-router.get('/', (req, res) => {
+router.get('/user', (req, res) => {
   User.find({}, (err, users) => {
     if (err) { 
       return res.status(500).send("There was a problem with finding the users");
@@ -31,7 +31,7 @@ router.get('/', (req, res) => {
 });
 
 // GET USER BY ID
-router.get('/:id', (req, res) => {
+router.get('/user/:id', (req, res) => {
   User.findById(req.params.id, (err, user) => {
     if (err) {
       return res.status(500).send("There was a problem with finding the user");
@@ -44,7 +44,7 @@ router.get('/:id', (req, res) => {
 });
 
 // DELETE USER BY ID
-router.delete('/:id', (req, res) => {
+router.delete('/user/:id', (req, res) => {
   User.findByIdAndRemove(req.params.id, (err, user) => {
     if (err) {
       return res.status(500).send("There was a problem deleting the user");
@@ -54,7 +54,7 @@ router.delete('/:id', (req, res) => {
 });
 
 // UPDATE USER BY ID
-router.put('/:id', (req, res) => {
+router.put('/user/:id', (req, res) => {
   User.findByIdAndUpdate(req.params.id, req.body, { new: true }, (err, user) => {
     if (err) {
       return res.status(500).send("There was a problem updating the user");
