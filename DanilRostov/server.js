@@ -1,12 +1,10 @@
-const express = require('express');
+const app = require('./app');
+const port = process.env.PORT || 5005;
 const mongoose = require('mongoose');
+const db = require('./config/keys').mongoURI;
 
 const pokemons = require('./routes/pokemons');
-const pokemon = require('./routes/pokemon');
-const app = express();
-
-const db = require('./config/keys').mongoURI;
-const port = process.env.PORT || 5005;
+const user = require('./routes/user');
 
 mongoose
   .connect(db, { useNewUrlParser: true })
@@ -14,9 +12,9 @@ mongoose
   .catch(err => console.log(err));
 
 app.get('/', (req, res) => {
-  res.send('server is working');
+  res.status(200).send('server is working');
 });
 app.use('/pokemons', pokemons);
-app.use('/pokemon', pokemon);
+app.use('/user', user);
 
 app.listen(port, () => console.log(`Server started on port ${port}`));
