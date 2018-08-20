@@ -56,4 +56,10 @@ router.put('/catch/:id', checkToken, (req, res) => {
   });
 });
 
+// GET CATCHED POKEMONS OF USER
+router.get('/catched/:id', checkToken, (req, res) => {
+  User.findById(req.params.id)
+    .then(user => res.status(200).send(user.pokemons));
+})
+
 module.exports = router;

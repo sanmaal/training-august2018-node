@@ -44,7 +44,7 @@ router.get('/authorize', checkToken, (req, res, next) => {
     if (err) {
       return res.status(500).send({ 
         isAuth: false, 
-        status: 'Failed to authenticate token' 
+        status: 'Failed to auth token' 
       });
     }
     User.findById(decoded.id, { password: 0 })
