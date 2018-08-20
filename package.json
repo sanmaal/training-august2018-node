@@ -1,0 +1,31 @@
+{
+  "name": "pokemon-api",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "seed": "node seeds.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/KirillMak/pokemon-api.git"
+  },
+  "author": "Kirill Makarikhin",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/KirillMak/pokemon-api/issues"
+  },
+  "homepage": "https://github.com/KirillMak/pokemon-api#readme",
+  "dependencies": {
+    "bcryptjs": "^2.4.3",
+    "bluebird": "^3.5.1",
+    "body-parser": "^1.18.3",
+    "express": "^4.16.3",
+    "express-session": "^1.15.6",
+    "passport": "^0.4.0",
+    "passport-local": "^1.0.0",
+    "pg": "^6.0.0",
+    "pg-promise": "^8.4.5"
+  }
+}
