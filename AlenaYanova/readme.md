@@ -45,7 +45,7 @@ with body
 ```
 {
     "email": "your_email@example.com",
-    "password": "your_password,
+    "password": "your_password",
     "name": "your_name"
 }
 ```
