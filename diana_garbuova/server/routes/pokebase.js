@@ -1,9 +1,9 @@
 const router = require('express').Router();
 const bodyParser = require('body-parser');
-const jwt = require('jsonwebtoken');
+
 const Pokemon = require('../models/pokemon');
 const User = require('../models/user');
-const { secret } = require('../config/secret');
+const checkToken = require('../config/checkToken');
 
 router.use(bodyParser.json());
 
@@ -12,45 +12,30 @@ router.get('/', async(req, res) => {
   res.status(200).send(pokemons);
 });
 
-router.post('/:pokename', async (req, res) => {
-  const token = req.headers.authorization;
-  await Pokemon.findOne({ name: req.params.pokename })
-  .then((pokemon) => {
-    if (token) {
-      const decoded = jwt.verify(token, secret);
+router.post('/:pokename', checkToken, async (req, res) => {
+  await Pokemon.findOne({ name: req.params.pokename }, (err, pokemon) => {
+    if (pokemon) {
       User.findByIdAndUpdate(
-        decoded.id,
+        req.userId,
         { $push: { catched: pokemon } },
       )
-      .then((user) => {
-        res.status(200).send(user);
-      })
-      .catch((err) => {
-        res.status(500).send(err);
+      .then(() => {
+        res.status(200).send(`${req.params.pokename} was cathed`);
       });
     } else {
-      res.status(401).send('Who are you?');
+      res.status(500).send('Current pokemon does not exist');
     }
   })
-  .catch(() => {
-    res.status(500).send('Current pokemon does not exist');
-  });
 });
 
-router.get('/catched', (req, res) => {
-  const token = req.headers.authorization;
-  if (token) {
-    const decoded = jwt.verify(token, secret);
-    User.findById(decoded.id)
-    .then((user) => {
-      res.status(200).send(user.catched);
-    })
-    .catch((err) => {
-      res.status(500).send(err);
-    })
-  } else {
-    res.status(401).send('Who are you?');
-  }
+router.get('/catched', checkToken, (req, res) => {
+  User.findById(req.userId)
+  .then((user) => {
+    res.status(200).send(user.catched);
+  })
+  .catch((err) => {
+    res.status(500).send(err);
+  })
 });
 
 module.exports = router;

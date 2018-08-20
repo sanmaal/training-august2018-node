@@ -1,6 +1,5 @@
-const { secret } = require('./secret');
-
 module.exports = {
   getConnect: require('./connect'),
-  secret
+  createToken: require('./createToken'),
+  secret: require('./secret')
 };
