@@ -1,0 +1,19 @@
+{
+    "users":[
+        {
+            "id": 1,
+            "login": "test",
+            "password": "$2a$10$36VR1sqUjfXRaV2MsIOcBurpT2nRjqAPC5H.mJh/yIG6M7RziNKPe"
+        },
+        {
+            "id": 2,
+            "login": "admin",
+            "password": "$2a$10$cR1Ypm2VbRUDJeJ9qnc7XueLKfrXTAzmhJi1GYjWKGt6J2thm4g9y"
+        },
+        {
+            "id": 3,
+            "login": "user@mail.ru",
+            "password": "$2a$10$Y6TUBvOhBkBR6gUc0eMzaOR7jLIK5/VmWBeGkFxCxF0s4g8rVN/Pa"
+        }
+    ]
+}
