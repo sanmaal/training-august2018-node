@@ -19,11 +19,22 @@ const setUserInfo = (request) => {
 };
 
 exports.login = (req, res, next) => {
-  const userInfo = setUserInfo(req.user);
-  res.status(200).json({
-    token: 'JWT ' + generateToken(userInfo),
-    user: userInfo
-  });
+  User.findOne({ email: req.body.email })
+    .then(user => {
+      if (!user) {
+        return res.status(403).json({ error: 'This email not exist. Please try again.' });
+      }
+      user.comparePassword(req.body.password)
+        .then(isMatch => {
+          if (!isMatch) {
+            return res.status(403).json({ error: 'Your password is incorrect. Please try again.' });
+          }
+          const userInfo = setUserInfo(user);
+          res.status(200).json({ token: generateToken(userInfo) });
+        })
+        .catch(err => next(err))
+    })
+    .catch(err => next(err));
 };
 
 exports.register = (req, res, next) => {
@@ -53,26 +64,25 @@ exports.register = (req, res, next) => {
       if (err) { return next(err); }
       let userInfo = setUserInfo(user);
       res.status(201).json({
-        token: 'JWT ' + generateToken(userInfo),
-        user: userInfo
+        token: generateToken(userInfo)
       });
     });
   });
 };
 
-exports.roleAuthorization = (role) => {
-  return (req, res, next) => {
-    const user = req.user;
-    User.findById(user._id, (err, foundUser) => {
-      if (err) {
-        res.status(422).json({ error: 'No user was found.' });
-        return next(err);
+exports.checkToken = (req, res, next) => {
+  const token = req.headers['x-access-token'];
+  if (token){
+    jwt.verify(token, config.secret, (err, decoded) => {
+      if (err){
+        res.status(403).json({ error: 'Failed to authentificate token.' })
+      } else {
+        // TODO: add redis for saving active tokens
+        req.user = decoded;
+        next();
       }
-      if (foundUser.role === role) {
-        return next();
-      }
-      res.status(401).json({ error: 'You are not authorized to view this content.' });
-      return next('Unauthorized');
     })
+  } else {
+    res.status(403).json({ error: 'No token provided.' })
   }
 };
