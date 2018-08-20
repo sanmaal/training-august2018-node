@@ -1,0 +1,60 @@
+li{
+  list-style-type: none;
+
+  &.pokemon-list__item{
+    padding: 20px;
+    margin: 10px;
+    box-shadow: 0 0 3px #ccc;
+    border-radius: 4px;
+    transition: .3s;
+
+    &:hover{
+      box-shadow: 0 0 10px 1px #ccc
+    }
+
+    a{
+      display: block;
+      text-decoration: none;
+
+      &:hover{
+        text-decoration: none;
+      }
+    }
+
+    button{
+      display: block;
+      text-align: center;
+      border: none;
+      border-radius: 3px;
+      color: #fff;
+      background: #ff5c77;
+      margin: 5px auto;
+      padding: 10px 15px;
+      width: 100%;
+      position: relative;
+      top: 0;
+      transition: .3s;
+      cursor: pointer;
+
+      &:disabled{
+        background: #bbb;
+        cursor: default;
+      }
+
+      &:hover{
+        opacity: .9;
+      }
+    }
+
+    span{
+      display: block;
+      text-align: center;
+      padding: 5px;
+      color: #555;
+
+      &:first-letter{
+        text-transform: uppercase;
+      }
+    }
+  }
+}

@@ -1,0 +1,37 @@
+
+.pokemon-info{
+  text-align: center;
+  span{
+    display: block;
+    padding: 10px;
+  }
+
+  &__name{
+    font-family: PokemonFont;
+    font-size: 24px;
+    letter-spacing: 5px;
+    &:first-letter{
+      text-transform:uppercase;
+    }
+  }
+
+  &__caught{
+    font-size: 12px;
+  }
+
+  &__id{
+    font-family: PokemonFont;
+    font-size: 20px;
+    letter-spacing: 1px;
+
+    &:before{
+    content: "Pokemon id:";
+    margin-right: 5px;
+    }
+  }
+  img{
+    max-width: 100%;
+    margin-top: 20px;
+    width: 320px;
+  }
+}

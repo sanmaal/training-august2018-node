@@ -1,0 +1,15 @@
+.welcome-page-block{
+  position: absolute;
+  left: 50%;
+  top:50%;
+  transform: translate(-50%,-50%);
+  text-align: center;
+
+  h1{
+    white-space: nowrap;
+    span{
+      font-family: PokemonFont;
+      letter-spacing: 3px;
+    }
+  }
+}
