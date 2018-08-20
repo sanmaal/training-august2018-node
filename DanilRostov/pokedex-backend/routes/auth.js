@@ -50,9 +50,6 @@ router.get('/authorize', checkToken, (req, res, next) => {
     User.findById(decoded.id, { password: 0 })
       .catch(err => res.status(500).send(err))
       .then(user => {
-        if (!user) {
-          return res.status(404).send("No user");
-        }
         next(user)
       });
   });
@@ -64,9 +61,6 @@ router.use((user, req, res, next) => res.status(200).send(user));
 router.post('/login', (req, res) => {
   User.findOne({ email: req.body.email })
     .then((user) => {
-      if (!user) {
-        return res.status(404).send('No user');
-      }
       const passwordIsValid = bcrypt.compareSync(req.body.password, user.password);
       if (!passwordIsValid) {
         return res.status(401).send({ 
