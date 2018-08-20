@@ -1,0 +1,30 @@
+.pokemons-list {
+    height: 94%;
+    margin: 0;
+    overflow-y: scroll;
+    overflow-x: hidden;
+    list-style: none;
+    padding: 0;
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+}
+
+.more-button {
+    background-color: transparent;
+    font-size: 1em;
+    border: 0;
+    cursor: pointer;
+    color: rgba(30, 30, 255, 0.5);
+    padding: 10px;
+}
+
+.more-button.disabled {
+    display: none;
+}
+
+@media (max-width: 520px) {
+    .pokemons-list {
+        height: 90%;
+    }
+}

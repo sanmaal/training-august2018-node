@@ -1,0 +1,24 @@
+.main-menu {
+    width: 90%;
+    list-style: none;
+    display: flex;
+    padding: 0;
+    margin: 0;
+}
+
+.main-menu a {
+    padding: 12px 0;
+    text-decoration: none;
+    color: #fff;
+    display: block;
+    text-align: center;
+    cursor: pointer;
+}
+
+.main-menu li {
+    padding: 0 5px;
+}
+
+.main-menu li:hover {
+    background-color: rgba(0, 0, 0, 0.15);
+}

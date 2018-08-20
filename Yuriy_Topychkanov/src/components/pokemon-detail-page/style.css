@@ -1,0 +1,14 @@
+.pokemon-detail {
+    color: rgba(30, 30, 255, 0.5);
+}
+
+
+.pokemon-detail figure img {
+    width: 20%;
+    min-width: 100px;
+}
+
+.pokemon-detail figcaption span > span {
+    color: rgba(30, 30, 255, 0.7);
+    text-align: center;
+}

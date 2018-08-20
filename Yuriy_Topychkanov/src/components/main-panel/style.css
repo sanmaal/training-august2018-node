@@ -1,0 +1,11 @@
+.main-panel {
+    display: flex;
+    flex-direction: column;
+    width: 95%;
+}
+
+@media (max-width: 520px) {
+    .main-panel {
+        width: 100%;
+    }
+}

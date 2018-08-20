@@ -1,0 +1,14 @@
+header {
+    background-color: rgba(30, 30, 255, 0.5);
+    display: flex;
+}
+
+header .logo {
+    height: 40px;
+    padding: 0 5px 5px 0;
+
+}
+
+header ul {
+
+}

@@ -1,0 +1,10 @@
+.left-panel {
+    background-color: rgba(30, 30, 255, 0.5);
+    width: 5%;
+}
+
+@media (max-width: 520px) {
+    .left-panel {
+        width: 0;
+    }
+}

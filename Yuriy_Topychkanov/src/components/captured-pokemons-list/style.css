@@ -1,0 +1,9 @@
+.empty-list-text {
+    font-size: 24px;
+    padding-top: 10px;
+    color: rgba(30, 30, 255, 0.7);
+}
+
+.full-list {
+    height: 100%;
+}
