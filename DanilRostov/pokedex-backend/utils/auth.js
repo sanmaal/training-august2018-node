@@ -17,7 +17,7 @@ const checkToken = (req, res, next) => {
         status: 'Failed to authenticate token' 
       });
     }
-    req.userId = decoded.id;
+    req.payload = decoded;
     next();
   });
 };

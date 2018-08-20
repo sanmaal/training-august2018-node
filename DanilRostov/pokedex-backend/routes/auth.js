@@ -33,30 +33,11 @@ router.post('/register', (req, res) => {
 });
 
 // AUTHORIZE USER
-router.get('/authorize', checkToken, (req, res, next) => {
-  const token = req.headers['x-token'];
-  if (!token) {
-    return res.status(401).send({ 
-      isAuth: false, 
-      status: 'No token' 
-    });
-  }
-  jwt.verify(token, config.secret, (err, decoded) => {
-    if (err) {
-      return res.status(500).send({ 
-        isAuth: false, 
-        status: 'Failed to auth token' 
-      });
-    }
-    User.findById(decoded.id, { password: 0 })
-      .catch(err => res.status(500).send(err))
-      .then(user => {
-        next(user)
-      });
-  });
+router.get('/authorize', checkToken, (req, res) => {
+  User.findById(req.payload.id, { password: 0 })
+    .then(user => res.status(200).send(user))
+    .catch(err => res.status(500).send(err))
 });
-
-router.use((user, req, res, next) => res.status(200).send(user));
 
 // LOGIN USER
 router.post('/login', (req, res) => {

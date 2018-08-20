@@ -11,41 +11,42 @@ const checkToken = require('../utils/auth');
 // RETURN ALL USERS
 router.get('/users', checkToken, (req, res) => {
   User.find({}, { password: 0 })
-   .then((err, users) => {
+   .then(users => {
       res.status(200).send(users);
     });
 });
 
 // GET USER
-router.get('/user/:id', checkToken, (req, res) => {
-  User.findById(req.params.id, { password: 0 })
-    .then((err, user) => {
+router.get('/user', checkToken, (req, res) => {
+  User.findById(req.payload.id, { password: 0 })
+    .then(user => {
       res.status(200).send(user);
     });
 });
 
 // DELETE USER
-router.delete('/user/:id', checkToken, (req, res) => {
-  User.findByIdAndRemove(req.params.id)
-    .then((err, user) => {
+router.delete('/user', checkToken, (req, res) => {
+  User.findByIdAndRemove(req.payload.id)
+    .then(user => {
       res.status(200).send(`User: ${user.name} was deleted`);
     });
 });
 
 // CATCH POKEMON
-router.put('/catch/:id', checkToken, (req, res) => {
+router.put('/catch', checkToken, (req, res) => {
   const pokemonId = req.query.pokemonId;
-  User.findByIdAndUpdate(req.params.id, { $push: { pokemons: pokemonId } })
-    .then((err, user) => {
-      User.findById(user._id, (err, user) => {
-        res.status(200).send(user.pokemons);
-      })
+  User.findByIdAndUpdate(req.payload.id, { $push: { pokemons: pokemonId } })
+    .then(user => {
+      User.findById(user._id)
+        .then(user => {
+          res.status(200).send(user.pokemons);
+        })
     });
 });
 
 // GET CATCHED POKEMONS OF USER
-router.get('/catched/:id', checkToken, (req, res) => {
-  User.findById(req.params.id)
+router.get('/catched', checkToken, (req, res) => {
+  User.findById(req.payload.id)
     .then(user => res.status(200).send(user.pokemons));
 })
 

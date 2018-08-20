@@ -7,4 +7,6 @@ const pokemonSchema = new Schema({
   id: Number
 });
 
-module.exports = Pokemon = mongoose.model('pokemon', pokemonSchema);
+const Pokemon = mongoose.model('pokemon', pokemonSchema);
+
+module.exports = Pokemon;
