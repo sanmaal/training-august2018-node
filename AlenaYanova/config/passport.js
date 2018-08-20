@@ -11,24 +11,22 @@ const localOptions = {
   passwordField: 'password'
 };
 
-const localLogin = new LocalStrategy(localOptions, (email, password, next) => {
-  User.findOne({ email }, (err, user) => {
-    if (err) {
-      return next(err);
-    }
-    if (!user) {
-      return next(null, false, { error: 'This email not exist. Please try again.' });
-    }
-    user.comparePassword(password, (err, isMatch) => {
-      if (err) {
-        return next(err);
+const localLogin = new LocalStrategy(localOptions, (email, password, done) => {
+  User.findOne({ email })
+    .then(user => {
+      if (!user) {
+        return done(null, false, { error: 'This email not exist. Please try again.' });
       }
-      if (!isMatch) {
-        return next(null, false, { error: 'Your password is incorrect. Please try again.' });
-      }
-      return next(null, user);
-    });
-  });
+      user.comparePassword(password)
+        .then(isMatch => {
+          if (!isMatch) {
+            return done(null, false, { error: 'Your password is incorrect. Please try again.' });
+          }
+          return done(null, user);
+        })
+        .catch(err => done(err))
+    })
+    .catch(err => done(err));
 });
 
 const jwtOptions = {
@@ -36,13 +34,13 @@ const jwtOptions = {
   secretOrKey: config.secret
 };
 
-const jwtLogin = new JwtStrategy(jwtOptions, (jwt_payload, next) => {
+const jwtLogin = new JwtStrategy(jwtOptions, (jwt_payload, done) => {
   User.findById(jwt_payload._id, (err, user) => {
-    if (err) { return next(err, false); }
+    if (err) { return done(err, false); }
     if (user) {
-      next(null, user);
+      done(null, user);
     } else {
-      next(null, false);
+      done(null, false);
     }
   });
 });

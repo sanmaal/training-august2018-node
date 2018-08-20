@@ -11,7 +11,13 @@ const
   router = require('./app/routes'),
   errorHandler = require('./utils/error_handler').errorHandler;
 
-mongoose.connect(url, options);
+mongoose.connect(url, options)
+  .then(() => {
+    console.log('App connected to database');
+  })
+  .catch(err => {
+    console.log(err);
+  });
 
 const devLogStream = fs.createWriteStream(__dirname + '/dev.log', { flags: 'a' });
 app.use(logger('dev', { stream: devLogStream }));
