@@ -7,8 +7,12 @@ const checkToken = require('../config/checkToken');
 
 router.use(bodyParser.json());
 
-router.get('/', async(req, res) => {
-  const pokemons = await Pokemon.find({}, 'name').exec();
+router.get('/:page?', async(req, res) => {
+  const { limit } = req.query;
+  const pokemons = await Pokemon
+  .find()
+  .skip((limit * req.params.page) - limit)
+  .limit(Number(limit));
   res.status(200).send(pokemons);
 });
 
