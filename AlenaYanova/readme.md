@@ -8,7 +8,7 @@ This instructions will get you run this amazing app.
 
 ### Installing
 
-Install all packages
+Install all packages.
 
 ```
 npm install
@@ -16,11 +16,11 @@ npm install
 
 ### Setting env variables
 
-Create `.env` and fill in according env.example
+Create `.env` and fill in according `env.example`.
 
 ### Database initialization
 
-Run script for creating pokemons collection in database
+Run script for creating pokemons collection in database.
 
 ```
 npm run dbinit
@@ -44,17 +44,17 @@ with body
 
 ```
 {
-"email": "your_email@example.com",
-"password": "123456",
-"name": "your_name"
+    "email": "your_email@example.com",
+    "password": "your_password,
+    "name": "your_name"
 }
 ```
  
-In response you will get jwt token 
+In response you will get jwt token. 
 
 ```
 {
-"token": "your_token"
+    "token": "your_token"
 }
 ```
 
@@ -70,16 +70,16 @@ with body
 
 ```
 {
-"email": "your_email@example.com",
-"password": "123456",
+    "email": "your_email@example.com",
+    "password": "your_password"
 }
 ```
 
-In response you will get jwt token 
+In response you will get jwt token.
 
 ```
 {
-"token": "your_token"
+    "token": "your_token"
 }
 ```
 
@@ -107,7 +107,7 @@ You will get something like
 
 #### Get many pokemons
 
-Use `GET` query
+Use `GET` query for rout
 
 ```
 /pokemons/page/:number
@@ -131,7 +131,7 @@ You will get json
 
 #### Get caught pokemons
 
-Only for authorized users. For authorization, add a title `"x-access-token": "your_token"`
+Only for authorized users. For authorization, add a title `"x-access-token": "your_token"`.
 
 Use `GET` query
 
@@ -143,7 +143,7 @@ Changes in number of pokemons per page and response are similar to previous rout
 
 #### Catch pokemon
 
-Only for authorized users. For authorization, add a title `"x-access-token": "your_token"`
+Only for authorized users. For authorization, add a title `"x-access-token": "your_token"`.
 
 Use `POST` query
 
