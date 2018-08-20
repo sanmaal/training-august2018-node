@@ -1,3 +1,4 @@
+"use strict"
 const mongoose = require('mongoose');
 const initData = require('../pokemons.json');
 const db = require('./config/keys').mongoURI;

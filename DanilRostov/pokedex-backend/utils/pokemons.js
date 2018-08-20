@@ -1,3 +1,4 @@
+"use strict"
 const generateIds = (start, limit) => {
   let ids = [];
   let counterMinus = Number(limit);
