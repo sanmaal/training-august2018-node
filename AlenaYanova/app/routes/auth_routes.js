@@ -1,3 +1,5 @@
+'use strict';
+
 const
   AuthenticationController = require('../controllers/authentification');
 

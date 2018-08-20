@@ -1,3 +1,5 @@
+'use strict';
+
 const
   Pokemon = require('../models/pokemon'),
   url_parse = require('url').parse;

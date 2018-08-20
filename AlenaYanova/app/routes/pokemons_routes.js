@@ -1,3 +1,5 @@
+'use strict';
+
 const
   PokemonsController = require('../controllers/pokemons'),
   AuthentificationController = require('../controllers/authentification');
