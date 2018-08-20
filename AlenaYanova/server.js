@@ -12,8 +12,7 @@ const
   config = require('./config/main'),
   url = require('./config/db').url,
   options = require('./config/db').options,
-  router = require('./app/routes'),
-  errorHandler = require('./utils/error_handler').errorHandler;
+  router = require('./app/routes');
 
 mongoose.connect(url, options)
   .then(() => {
@@ -36,8 +35,6 @@ app.use(bodyParser.urlencoded({ extended: true }));
 app.use(bodyParser.json());
 
 router(app);
-
-app.use(errorHandler);
 
 app.listen(config.port, () => {
   console.log('App is running on port ' + config.port);

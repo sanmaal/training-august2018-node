@@ -2,18 +2,19 @@
 
 const
   Pokemon = require('../models/pokemon'),
-  url_parse = require('url').parse;
+  url_parse = require('url').parse,
+  handleError = require('../../utils/error_handler').handleError;
 
-exports.getPokemonById = (req, res, next) => {
+exports.getPokemonById = (req, res) => {
   const details = { 'id': req.params.id };
   Pokemon.findOne(details)
     .select({ 'catchInfo.userId': 0, '_id': 0, '__v': 0 })
     .then(pokemon =>
       res.status(200).send(pokemon))
-    .catch(err => next(err))
+    .catch(err => handleError(err, res))
 };
 
-exports.pagination = (req, res, next) => {
+exports.pagination = (req, res) => {
   const
     query = url_parse(req.url, true).query,
     perPage = query.perPage? +query.perPage: 10,
@@ -25,11 +26,11 @@ exports.pagination = (req, res, next) => {
     .select({ 'catchInfo.userId': 0, '_id': 0, '__v': 0 })
     .exec((err, pokemons) => {
       if (err) {
-        return next(err);
+        return handleError(err, res);
       } else {
       Pokemon.countDocuments(req.details).exec((err, count) =>{
         if (err) {
-          return next(err);
+          return handleError(err, res);
         }
         res.status(200).json({
           pokemons: pokemons,
@@ -53,7 +54,7 @@ exports.setCaughtPokemonsQuery = (req, res, next) => {
   next();
 };
 
-exports.catchPokemon = (req, res, next) => {
+exports.catchPokemon = (req, res) => {
   const details = { 'id': req.params.id };
   Pokemon.findOne(details)
     .then(pokemon => {
@@ -64,5 +65,5 @@ exports.catchPokemon = (req, res, next) => {
         res.status(201).send(pokemon);
       }
     })
-    .catch(err => next(err))
+    .catch(err => handleError(err, res))
 };

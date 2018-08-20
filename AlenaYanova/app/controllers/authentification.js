@@ -3,7 +3,8 @@
 const
   jwt = require('jsonwebtoken'),
   User = require('../models/user'),
-  config = require('../../config/main');
+  config = require('../../config/main'),
+  handleError = require('../../utils/error_handler').handleError;
 
 const generateToken = (user) => {
   return jwt.sign(user, config.secret, {
@@ -20,7 +21,7 @@ const setUserInfo = (request) => {
   }
 };
 
-exports.login = (req, res, next) => {
+exports.login = (req, res) => {
   User.findOne({ email: req.body.email })
     .then(user => {
       if (!user) {
@@ -34,12 +35,12 @@ exports.login = (req, res, next) => {
           const userInfo = setUserInfo(user);
           res.status(200).json({ token: generateToken(userInfo) });
         })
-        .catch(err => next(err))
+        .catch(err => handleError(err, res))
     })
-    .catch(err => next(err));
+    .catch(err => handleError(err, res));
 };
 
-exports.register = (req, res, next) => {
+exports.register = (req, res) => {
   const email = req.body.email;
   const name = req.body.name;
   const password = req.body.password;
@@ -53,7 +54,7 @@ exports.register = (req, res, next) => {
     return res.status(422).json({ error: 'You must enter a password.' });
   }
   User.findOne({ email: email }, (err, existingUser) => {
-    if (err) { return next(err); }
+    if (err) { return handleError(err, res); }
     if (existingUser) {
       return res.status(422).json({ error: 'That email address is already in use.' });
     }
@@ -63,7 +64,7 @@ exports.register = (req, res, next) => {
       profile: { name: name }
     });
     user.save((err, user) => {
-      if (err) { return next(err); }
+      if (err) { return handleError(err, res); }
       let userInfo = setUserInfo(user);
       res.status(201).json({
         token: generateToken(userInfo)
