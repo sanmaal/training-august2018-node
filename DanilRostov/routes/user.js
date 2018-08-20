@@ -5,24 +5,11 @@ const bodyParser = require('body-parser');
 router.use(bodyParser.urlencoded({ extended: true }));
 router.use(bodyParser.json());
 const User = require('../models/user');
+const checkToken = require('../utils/auth');
 
-// CREATE USER
-router.post('/user', (req, res) => {
-  User.create({
-    name: req.body.name,
-    email: req.body.email,
-    password: req.body.password
-  }, (err, user) => {
-      if (err) {
-        return res.status(500).send("There was a problem with database");
-      }
-      res.status(200).send(user);
-    });
-});
-
-// RETURN ALL THE USERS
-router.get('/user', (req, res) => {
-  User.find({}, (err, users) => {
+// RETURN ALL USERS
+router.get('/users', checkToken, (req, res) => {
+  User.find({}, { password: 0 }, (err, users) => {
     if (err) { 
       return res.status(500).send("There was a problem with finding the users");
     }
@@ -30,9 +17,9 @@ router.get('/user', (req, res) => {
   });
 });
 
-// GET USER BY ID
-router.get('/user/:id', (req, res) => {
-  User.findById(req.params.id, (err, user) => {
+// GET USER
+router.get('/user/:id', checkToken, (req, res) => {
+  User.findById(req.params.id, { password: 0 }, (err, user) => {
     if (err) {
       return res.status(500).send("There was a problem with finding the user");
     }
@@ -43,23 +30,29 @@ router.get('/user/:id', (req, res) => {
   });
 });
 
-// DELETE USER BY ID
-router.delete('/user/:id', (req, res) => {
+// DELETE USER
+router.delete('/user/:id', checkToken, (req, res) => {
   User.findByIdAndRemove(req.params.id, (err, user) => {
     if (err) {
-      return res.status(500).send("There was a problem deleting the user");
+      return res.status(500).send("There was a problem with deleting the user");
     } 
     res.status(200).send(`User: ${user.name} was deleted`);
   });
 });
 
-// UPDATE USER BY ID
-router.put('/user/:id', (req, res) => {
-  User.findByIdAndUpdate(req.params.id, req.body, { new: true }, (err, user) => {
+// CATCH POKEMON
+router.put('/catch/:id', checkToken, (req, res) => {
+  const pokemonId = req.query.pokemonId;
+  User.findByIdAndUpdate(req.params.id, { $push: { pokemons: pokemonId } }, (err, user) => {
     if (err) {
-      return res.status(500).send("There was a problem updating the user");
-    } 
-    res.status(200).send(user);
+      return res.status(500).send("There was a problem with finding the user");
+    }
+    if (!user) {
+      return res.status(404).send("No user found");
+    }
+    User.findById(user._id, (err, user) => {
+      res.status(200).send(user.pokemons);
+    })
   });
 });
 

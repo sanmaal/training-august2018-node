@@ -13,7 +13,7 @@ const config = require('../config/keys');
 
 // REGISTER USER
 router.post('/register', (req, res) => {
-  const encodedPass = bcrypt.hashSync(req.body.password, 8);
+  const encodedPass = bcrypt.hashSync(req.body.password, 10);
   User.create({
     name: req.body.name,
     email: req.body.email,

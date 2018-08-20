@@ -16,7 +16,7 @@ router.get('/pokemons', (req, res) => {
   }
 });
 
-// GET POKEMON BY ID
+// GET POKEMON
 router.get('/pokemon/:id', (req, res) => {
   if (req.params.id) {
     const pokemonId = req.params.id;

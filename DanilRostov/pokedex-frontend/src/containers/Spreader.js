@@ -5,6 +5,8 @@ import PokemonsList from '../components/PokemonsList';
 import PokemonsCatched from '../components/PokemonsCatched';
 import PokemonPage from '../components/PokemonPage';
 
+import constants from '../constants';
+
 export default class Spreader extends Component {
   constructor(props) {
     super(props);
@@ -12,8 +14,35 @@ export default class Spreader extends Component {
       catchedPokemons: [],
       catchedIds: [],
       loadedPokemons: [],
+      isAuth: false
     }
   }
+
+  // isAuthenticated = () => {
+  //   localStorage.setItem('token', 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjViNzliZmNlMzY1MTU3MjBjNTNkNzMwMyIsImlhdCI6MTUzNDcwNTYxNCwiZXhwIjoxNTM0NzA5MjE0fQ.4PJoPhj5CcYOatPEAKE-DerF1J_JdCjZb1QM-1HpPXo');
+  //   const token = localStorage.getItem('token');
+  //   console.log(token);
+  //   if(token) {
+  //     fetch(`${constants.host}/authorize`, {
+  //       headers: {
+  //         "Content-Type": "application/json; charset=utf-8",
+  //         "x-token": token
+  //       },
+  //     })
+  //     .then(res => res.json())
+  //     .then(data => {
+  //       if(data.isAuth) {
+  //         this.setState({
+  //           isAuth: true
+  //         });
+  //       }
+  //     });
+  //   }
+  // }
+
+  // componentDidMount = () => {
+  //   console.log(this.isAuthenticated());
+  // }
 
   handleCatched = (pokemons, pokemon, date) => {
     const { catchedPokemons, catchedIds } = this.state;
@@ -32,8 +61,6 @@ export default class Spreader extends Component {
 
   render() {
     const { catchedPokemons, catchedIds } = this.state;
-    const host = 'http://localhost:5005';
-    const imgSrc = 'https://raw.githubusercontent.com/epam-js-may-2018/homework-7-js/master/pokemons';
     return (
       <Switch>
         <Route
@@ -44,8 +71,8 @@ export default class Spreader extends Component {
                                 catchedPokemons={catchedPokemons}
                                 onCatched={this.handleCatched}
                                 onLoadPokemons={this.handleLoadPokemons}
-                                host={host}
-                                imgSrc={imgSrc}
+                                host={constants.host}
+                                imgSrc={constants.imgSrc}
                              />}
         />
         <Route
@@ -53,7 +80,7 @@ export default class Spreader extends Component {
            render={(props) => <PokemonsCatched
                                 {...props}
                                 catchedPokemons={this.state.catchedPokemons}
-                                imgSrc={imgSrc}
+                                imgSrc={constants.imgSrc}
                               />}
          />
         <Route
@@ -63,8 +90,8 @@ export default class Spreader extends Component {
                                 catchedIds={catchedIds}
                                 catchedPokemons={catchedPokemons}
                                 loadedPokemons={this.state.loadedPokemons}
-                                host={host}
-                                imgSrc={imgSrc}
+                                host={constants.host}
+                                imgSrc={constants.imgSrc}
                              />}
         />
       </Switch>
