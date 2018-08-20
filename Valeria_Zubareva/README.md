@@ -34,7 +34,7 @@ npm run server
 ```
 
 ## Use
-###Auth
+### Auth
 Post http request, specify in the body user's `name`, `email` and `password`
 ```
 http://localhost:5000/api/auth/register
@@ -48,7 +48,7 @@ http://localhost:5000/api/auth/login
 ```
 to login.
 
-###Pokemons
+### Pokemons
 Get http request for getting part of pokemons, specify `token` in headers for authorized user.
 ```
 http://localhost:5000/api/pokemons?offset=0&limit=16
