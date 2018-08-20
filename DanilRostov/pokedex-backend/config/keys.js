@@ -1,4 +1,12 @@
+const {
+  DB_NAME,
+  DB_USER,
+  DB_PASS,
+  DB_ID,
+  TOKEN_SECRET
+} = process.env;
+
 module.exports = {
-  mongoURI: 'mongodb://testUser:testPass1@ds125602.mlab.com:25602/pokemons',
-  secret: 'seCretkEy150248'
+  mongoURI: `${DB_NAME}://${DB_USER}:${DB_PASS}@${DB_ID}`,
+  secret: TOKEN_SECRET
 }
