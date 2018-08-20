@@ -1,5 +1,6 @@
+const { DB_USER, DB_PWD, DB_HOST, DB_PORT, DB_NAME } = process.env;
+
 module.exports = {
-  url: 'mongodb+srv://test-user:test@cluster0-x6gjc.mongodb.net/test?retryWrites=true',
-  // url: 'mongodb://test:test1234@ds123372.mlab.com:23372/pokedex',
+  url: `mongodb://${DB_USER}:${DB_PWD}@${DB_HOST}:${DB_PORT}/${DB_NAME}`,
   options: { useNewUrlParser: true }
 };
