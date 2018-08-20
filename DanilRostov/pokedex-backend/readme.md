@@ -1,6 +1,6 @@
 ## Backend for pokedex application ##
 
-###Cli commands###
+### Cli commands ###
 
 `npm run initDb` - initialize data base
 
@@ -8,22 +8,22 @@
 
 `npm start` - start server
 
-###API###
+### API ###
 
-####Pokemons####
+#### Pokemons ####
 GET `/pokemons` - get pokemons by query string. Queries: `_start`, `_limit`
 GET `/pokemon/:id` - get pokemon by id
 
-####Users####
+#### Users ####
 GET `/users` - get all users `token required`
 GET `/user` - get user `token required`
 DELETE `/user` - delete user `token required`
 
-####Catched pokemons####
+#### Catched pokemons ####
 PUT `/catch` - catch pokemon `token required`
 GET `/catched` - get catched pokemons of user `token required`
 
-####Auth####
+#### Auth ####
 POST `/register` - register new user. Body params: `name`, `email`, `password`
 GET `/authorize` - auth user. Returns user `token required`
 POST `/login` - logining in user. Body params: `email`, `password`
