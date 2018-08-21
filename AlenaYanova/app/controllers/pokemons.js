@@ -24,20 +24,21 @@ exports.pagination = (req, res) => {
     .limit(perPage)
     .sort('id')
     .select({ 'catchInfo.userId': 0, '_id': 0, '__v': 0 })
-    .exec((err, pokemons) => {
-      if (err) {
-        return handleError(err, res);
-      } else {
-      Pokemon.countDocuments(req.details).exec((err, count) =>{
-        if (err) {
-          return handleError(err, res);
-        }
-        res.status(200).json({
-          pokemons: pokemons,
-          page: page,
-          pages: count / perPage
+    .then(pokemons => {
+      Pokemon.countDocuments(req.details)
+        .then(count => {
+          res.status(200).json({
+            pokemons: pokemons,
+            page: page,
+            pages: count / perPage
+          })
         })
-      })}
+        .catch(err => {
+          return handleError(err, res);
+        })
+    })
+    .catch(err => {
+      return handleError(err, res);
     });
 };
 
