@@ -1,6 +1,6 @@
 "use strict"
 const mongoose = require('mongoose');
-const initData = require('../pokemons.json');
+const initData = require('../../pokemons.json');
 const db = require('./config/keys').mongoURI;
 
 const pokemonsListSchema = new mongoose.Schema({ name: String, id: Number });
@@ -18,7 +18,7 @@ mongoose
     PokemonsList.insertMany(initData.pokemons)
       .then(() => {
         console.log('Init data loaded into MongoDB successfully!');
-        process.exit(0);
+        mongoose.connection.close()
       })
       .catch(err => console.log(err));
   })
