@@ -27,23 +27,20 @@ exports.login = (req, res) => {
       if (!user) {
         return res.status(403).json({ error: 'This email not exist. Please try again.' });
       }
-      user.comparePassword(req.body.password)
-        .then(isMatch => {
-          if (!isMatch) {
-            return res.status(403).json({ error: 'Your password is incorrect. Please try again.' });
-          }
-          const userInfo = setUserInfo(user);
-          res.status(200).json({ token: generateToken(userInfo) });
-        })
-        .catch(err => handleError(err, res))
+      return { isMatch: user.comparePassword(req.body.password), user }
     })
-    .catch(err => handleError(err, res));
+    .then(({ isMatch, user }) => {
+      if (!isMatch) {
+        return res.status(403).json({ error: 'Your password is incorrect. Please try again.' });
+      }
+      const userInfo = setUserInfo(user);
+      return res.status(200).json({ token: generateToken(userInfo) });
+    })
+    .catch(err => handleError(err, res))
 };
 
 exports.register = (req, res) => {
-  const email = req.body.email;
-  const name = req.body.name;
-  const password = req.body.password;
+  const { email, name, password } = req.body;
   if (!email) {
     return res.status(422).json({ error: 'You must enter an email address.' });
   }
@@ -53,24 +50,27 @@ exports.register = (req, res) => {
   if (!password) {
     return res.status(422).json({ error: 'You must enter a password.' });
   }
-  User.findOne({ email: email }, (err, existingUser) => {
-    if (err) { return handleError(err, res); }
-    if (existingUser) {
-      return res.status(422).json({ error: 'That email address is already in use.' });
-    }
-    let user = new User({
-      email: email,
-      password: password,
-      profile: { name: name }
-    });
-    user.save((err, user) => {
-      if (err) { return handleError(err, res); }
+  User.findOne({ email: email })
+    .then(existingUser => {
+      if (existingUser) {
+        return res.status(422).json({error: 'That email address is already in use.'});
+      }
+      let user = new User({
+        email: email,
+        password: password,
+        profile: {name: name}
+      });
+      return user.save()
+    })
+    .then((user) => {
       let userInfo = setUserInfo(user);
       res.status(201).json({
         token: generateToken(userInfo)
       });
-    });
-  });
+    })
+    .catch(err => {
+      return handleError(err, res);
+    })
 };
 
 exports.checkToken = (req, res, next) => {

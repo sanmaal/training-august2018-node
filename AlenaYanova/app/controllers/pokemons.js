@@ -25,17 +25,14 @@ exports.pagination = (req, res) => {
     .sort('id')
     .select({ 'catchInfo.userId': 0, '_id': 0, '__v': 0 })
     .then(pokemons => {
-      Pokemon.countDocuments(req.details)
-        .then(count => {
-          res.status(200).json({
-            pokemons: pokemons,
-            page: page,
-            pages: count / perPage
-          })
-        })
-        .catch(err => {
-          return handleError(err, res);
-        })
+      return { count: Pokemon.countDocuments(req.details), pokemons }
+    })
+    .then(({ count, pokemons }) => {
+      res.status(200).json({
+        pokemons: pokemons,
+        page: page,
+        pages: count / perPage
+      })
     })
     .catch(err => {
       return handleError(err, res);
