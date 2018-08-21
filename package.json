@@ -1,0 +1,20 @@
+{
+  "name": "pokemons_api",
+  "version": "1.0.0",
+  "description": "Дедлайн - **20.08.18**!",
+  "main": "app.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "init-db": "node ./utils/dbinit"
+  },
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "bcryptjs": "^2.4.3",
+    "body-parser": "^1.18.3",
+    "concurrently": "^3.6.1",
+    "express": "^4.16.3",
+    "jsonwebtoken": "^8.3.0",
+    "mongoose": "^5.2.9"
+  }
+}
