@@ -36,12 +36,8 @@ router.delete('/user', checkToken, (req, res) => {
 router.put('/catch', checkToken, (req, res) => {
   const pokemonId = req.query.pokemonId;
   User.findByIdAndUpdate(req.payload.id, { $push: { pokemons: pokemonId } })
-    .then(user => {
-      User.findById(user._id)
-        .then(user => {
-          res.status(200).send(user.pokemons);
-        })
-    });
+    .then(user => User.findById(user._id))
+    .then(user => res.status(200).send(user.pokemons))
 });
 
 // GET CATCHED POKEMONS OF USER
