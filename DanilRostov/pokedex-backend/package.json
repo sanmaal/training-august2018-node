@@ -1,0 +1,34 @@
+{
+  "name": "pokedex-fullstack-app",
+  "version": "1.0.0",
+  "description": "server and cliend sides for Pokedex application",
+  "main": "index.js",
+  "scripts": {
+    "initDb": "node -r dotenv/config initDB.js",
+    "dev": "nodemon -r dotenv/config server.js",
+    "start": "node -r dotenv/config server.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/DanilRostov/training-august2018-node.git"
+  },
+  "author": "Danil Rostov",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/DanilRostov/training-august2018-node/issues"
+  },
+  "homepage": "https://github.com/DanilRostov/training-august2018-node#readme",
+  "devDependencies": {
+    "nodemon": "^1.18.3"
+  },
+  "dependencies": {
+    "bcryptjs": "^2.4.3",
+    "body-parser": "^1.18.3",
+    "concurrently": "^3.6.1",
+    "cors": "^2.8.4",
+    "dotenv": "^6.0.0",
+    "express": "^4.16.3",
+    "jsonwebtoken": "^8.3.0",
+    "mongoose": "^5.2.9"
+  }
+}
