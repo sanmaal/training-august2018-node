@@ -145,7 +145,7 @@ Changes in number of pokemons per page and response are similar to previous rout
 
 Only for authorized users. For authorization, add a title `"x-access-token": "your_token"`.
 
-Use `POST` query
+Use `PUT` query
 
 ```
 /pokemons/catch/:id

@@ -21,7 +21,7 @@ module.exports = (app) => {
     PokemonsController.setCaughtPokemonsQuery,
     PokemonsController.pagination
   );
-  app.post(
+  app.put(
     '/pokemons/:id/catch',
     AuthentificationController.checkToken,
     PokemonsController.catchPokemon
