@@ -14,6 +14,9 @@ const openConnection = () => new Promise(resolve => {
     .then(() => {
       console.log('connected to database');
       resolve();
+    })
+    .catch((err) => {
+      console.log(err);
     });
 });
 
@@ -23,24 +26,28 @@ const removePokemons = () => new Promise(resolve => {
       console.log('all existing pokemons removed');
       resolve();
     })
+    .catch((err) => {
+      console.log(err);
+    });
 });
 
 const createPokemons = () => new Promise(resolve => {
-  let count = 0;
-  data.pokemons.map((item) => {
+  let pokemons = [];
+  data.pokemons.map(item => {
     const pokemon = new Pokemon({
       name: item.name,
       id: item.id
     });
-    pokemon.save((err) => {
-      if (err) { console.log(err) }
-      count++;
-      if (count === data.pokemons.length) {
+    pokemons.push(pokemon);
+  });
+  Pokemon.collection.insert(pokemons)
+    .then(() => {
         console.log('pokemons loaded');
         resolve();
-      }
+      })
+    .catch((err) => {
+      console.log(err);
     });
-  });
 });
 
 const closeConnection = () => new Promise(resolve => {
