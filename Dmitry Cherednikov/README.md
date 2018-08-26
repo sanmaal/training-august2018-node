@@ -20,7 +20,7 @@ use `node seed.js` to populate pokemons, then `npm start` to run server
 
 `api/pokemons/all/:id` - get single pokemon  
 
-`api/pokemons/all/catched` - get catched pokemons (required auth)  
+`api/pokemons/all/catched` - get catched pokemons (requires auth)  
 
 
 #### auth ####
