@@ -14,15 +14,21 @@ use `node seed.js` to populate pokemons, then `npm start` to run server
 
 #### pokemons ####
 
-`api/pokemons/all` - get all pokemons
-`api/pokemons/all/?page=number&amount=number` - get some of them
-`api/pokemons/all/:id` - get single pokemon
-`api/pokemons/all/catched` - get catched pokemons (required auth)
+`api/pokemons/all` - get all pokemons  
+
+`api/pokemons/all/?page=number&amount=number` - get some of them  
+
+`api/pokemons/all/:id` - get single pokemon  
+
+`api/pokemons/all/catched` - get catched pokemons (required auth)  
+
 
 #### auth ####
 
-`api/auth/login` - to log in 
-`api/auth/signup` - to sign up
+`api/auth/login` - to log in  
+
+`api/auth/signup` - to sign up  
+
 
 
 
