@@ -1,4 +1,4 @@
-# API
+# ☆彡 POKEMON API ミ☆ #
 
 `npm install` to install dependencies
 
