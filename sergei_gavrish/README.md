@@ -4,13 +4,13 @@
 
 Before you can initilize database you should customize environment variables. In order to do it create `.env` file in root folder and fill it accordong to the example:
 
-`USER = USER
- PASSWORD = PASSWORD
- HOST = HOST
- DBPORT = DBPORT
- NAME = NAME
- KEY = KEY
- SERVERPORT = SERVERPORT`
+`USER = USER'
+'PASSWORD = PASSWORD'
+'HOST = HOST'
+'DBPORT = DBPORT'
+'NAME = NAME'
+'KEY = KEY'
+'SERVERPORT = SERVERPORT`
 
 After you finished you have 2 diferrent ways to initilize database:
 
