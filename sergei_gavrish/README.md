@@ -1,25 +1,35 @@
-# Домашнее задание NodeJS
+# API
 
-Дедлайн - **20.08.18**!
+`npm install` to install dependencies
 
-Необходимо реализовать API для поиска и ловли покемонов, используя NodeJS и один из двух фреймворков: Express или Koa2.
-Для хранения информации о покемонах можно использовать как SQL - (PostgreSQL, MySQL), так и NoSQL(MongoDB) базу данных.
+Before you can initilize database you should customize environment variables. In order to do it create `.env` file in root folder and fill it accordong to the example:
 
-### Требования
+`USER = USER
+ PASSWORD = PASSWORD
+ HOST = HOST
+ DBPORT = DBPORT
+ NAME = NAME
+ KEY = KEY
+ SERVERPORT = SERVERPORT`
 
-API должно предоставлять следующие возможности:
-  * Авторизовывать пользователя
-  * Возвращать список всех покемонов (как для авторизованных пользователей, так и для неавторизованых)
-  * Авторизованному пользователю давать возможность поймать покемона
-  * Возвращать авторизованному пользователю список пойманных им покемонов
-  * Методы получения покемонов должны поддерживать пагинацию
+After you finished you have 2 diferrent ways to initilize database:
 
-Должна быть реализована инициализация БД с заполнением данных. Инициализация должна запускаться скриптом указанным в package.json.
+ * 'npm run dbinit' - initilize database without starting the project
+ * use init endpoin - start the project and use /initialize/ endpoint
 
+#### users ####
 
-### Примечания
+ * users/signup - register new user
+ * users/login - create jsonwebtoken 
 
-1. Данные для начальной инициализации базы лежат в репозитории в файле pokemons.json.
-2. БД можно использовать как локально развернутые, так и облачные
-3. Для выполнения задания необходимо форкнуть этот репозиторий, создать в нем каталог со своей фамилией и всю работу выполнить в нем. Cдача работы происходит через создание пулреквеста.
-4. В данном задании необходимо реализовать API, поэтому реализация фронтовой части необязательна
+#### pokemons ####
+
+ * pokemons/
+ * pokemons/user
+ * pokemons/catched
+ * pokemons/catch
+ * pokemons/:pokemonId
+
+#### init ####
+
+ * initialize/
