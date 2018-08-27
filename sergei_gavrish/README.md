@@ -20,16 +20,16 @@ After you finished you have 2 diferrent ways to initilize database:
 #### users ####
 
  * users/signup - register new user
- * users/login - create jsonwebtoken 
+ * users/login - login and create jsonwebtoken
 
 #### pokemons ####
 
- * pokemons/
- * pokemons/user
- * pokemons/catched
- * pokemons/catch
- * pokemons/:pokemonId
+ * pokemons/ - return all pokemons, redirect to pokemons/user if use jsonwebtoken
+ * pokemons/user - return pokemons and catched pokemons
+ * pokemons/catched - return catched pokemons
+ * pokemons/catch - catch pokemon
+ * pokemons/:pokemonId - return pokemon
 
 #### init ####
 
- * initialize/
+ * initialize/ - delete pokemon collection and create another one
