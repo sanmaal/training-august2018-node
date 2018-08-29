@@ -1,5 +1,5 @@
 import express from 'express';
-import db from './config/db';
+import { db } from './config/config';
 import InitController from './controllers/InitController';
 import AuthController from './controllers/AuthController';
 import PokemonsController from './controllers/PokemonsController';
