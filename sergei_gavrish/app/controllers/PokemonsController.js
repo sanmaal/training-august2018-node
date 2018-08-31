@@ -16,7 +16,7 @@ router.get(
     .build()
     .use(),
   (req, res) => {
-    if(req.headers['x-access-token']) return res.redirect('pokemons/userId');
+    if(req.headers['x-access-token']) return res.redirect('pokemons/user');
 
     const { _page, _limit } = req.query;
     Pokemon.find()
@@ -74,9 +74,9 @@ router.put(
   checkPokemon,
   (req, res) => {
 
-    Pokemon.findByIdAndUpdate(req.body.id, { $push: { catchedByUsers: req.userId }}, { 'new': true})
-      .then( pokemon => console.log('Pokemon catched'))
-      .catch( err => console.error(err));
+    // Pokemon.findByIdAndUpdate(req.body.id, { $push: { catchedByUsers: req.userId }}, { 'new': true})
+    //   .then( pokemon => console.log('Pokemon catched'))
+    //   .catch( err => console.error(err));
     
     User.findByIdAndUpdate(req.userId, { $push: { catched: req.body.id }}, { 'new': true})
       .then( (response) => res.status(200).send(response))
