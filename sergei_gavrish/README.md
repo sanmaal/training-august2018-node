@@ -12,6 +12,9 @@ Before you can initilize database you should customize environment variables. In
 * `KEY = KEY`
 * `SERVERPORT = SERVERPORT`
 
+If you use local database, do not use USER, PASSWORD, HOST.
+SERVERPORT - optional variable.
+
 After you finished you have 2 diferrent ways to initilize database:
 
  * 'npm run dbinit' - initilize database without starting the project
