@@ -25,7 +25,9 @@ router.get(
       .then( pokemons => (
         res.status(200).send(pokemons)
       ))
-      .catch( err => console.error(err));
+      .catch( err => {
+        res.status(500).send('Something went wrong');
+        return console.error(err)});
 });
 
 router.get(
@@ -41,10 +43,11 @@ router.get(
       .skip(_page * _limit - _limit)
       .limit(parseInt(_limit))
       .populate('catchedByUsers', 'name')
-      .then( (pokemons) => {
-        res.status(200).send(pokemons)
-      })
-      .catch( err => console.error(err));
+      .then( (pokemons) => res.status(200).send(pokemons))
+      .catch( err => {
+        res.status(500).send('Something went wrong');
+        return console.error(err);
+      });
 });
 
 router.get(
@@ -56,13 +59,19 @@ router.get(
   (req, res) => {
 
     const { _page, _limit } = req.query;
+
     User.findById(req.userId)
-    .populate('catched', 'name id')
-    .then( (user) => {
-      if(!user) return res.status(404).send('User not found');
-      const { catched } = user;
-      res.status(200).send(catched.slice(_page * _limit - _limit, _page * _limit));
-    });
+      .populate('catched', 'name id')
+      .then( (user) => {
+        if(!user) return res.status(404).send('User not found');
+        const { catched } = user;
+        return res.status(200).send(catched.slice(_page * _limit - _limit, _page * _limit));
+      })
+      .catch( err => {
+        res.status(500).send('Something went wrong');
+        return console.error(err);
+      });
+
 });
 
 router.put(
@@ -74,14 +83,13 @@ router.put(
   checkPokemon,
   (req, res) => {
 
-    // Pokemon.findByIdAndUpdate(req.body.id, { $push: { catchedByUsers: req.userId }}, { 'new': true})
-    //   .then( pokemon => console.log('Pokemon catched'))
-    //   .catch( err => console.error(err));
-    
-    User.findByIdAndUpdate(req.userId, { $push: { catched: req.body.id }}, { 'new': true})
+    Pokemon.findByIdAndUpdate(req.body.id, { $push: { catchedByUsers: req.userId }}, { 'new': true})
+      .then( () => console.log('Pokemon catched'))
+      .then( () => User.findByIdAndUpdate(req.userId, { $push: { catched: req.body.id }}, { 'new': true}))
       .then( (response) => res.status(200).send(response))
       .catch( (err) => {
-        if (err) return res.status(500).send(err);
+        res.status(500).send('Something went wrong');
+        return console.error(err);
       });
 
 });
@@ -92,12 +100,17 @@ router.get(
     .pokemon()
     .use(),
   (req, res) => {
+
     Pokemon.findOne( {id: req.params.pokemonId} )
       .then( (pokemon) => {
         if(!pokemon) return res.status(404).send('There is no pokemon with this id');
         return res.status(200).send(pokemon);
       })
-      .catch( err => console.error(err));
+      .catch( err => {
+        res.status(500).send('Something went wrong');
+        return console.error(err)
+      });
+
 });
 
 export default router;
