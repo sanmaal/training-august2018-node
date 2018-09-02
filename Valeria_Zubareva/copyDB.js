@@ -9,9 +9,7 @@ const initDB = () => {
     return mongoose
         .connect(db, {useNewUrlParser: true})
         .then(() => mongoose.connection.dropDatabase())
-        .then(async () => {
-            await Pokemon.insertMany(dbJson.pokemons);
-        })
+        .then(() => Pokemon.insertMany(dbJson.pokemons))
         .catch(err => console.log(err));
 };
 

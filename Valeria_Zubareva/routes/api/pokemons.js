@@ -7,7 +7,7 @@ const Pokemon = require('../../models/Pokemon');
 const User = require('../../models/User');
 
 router.get('/', (req, res) => {
-    let { offset, limit } = req.query;
+    const { offset, limit } = req.query;
     Pokemon.find()
         .skip(offset * limit)
         .limit(parseInt(limit))
@@ -17,6 +17,7 @@ router.get('/', (req, res) => {
             }
             res.status(200).json(pokemons)
         })
+        .catch(() => res.status(500).send("There was a problem with finding pokemons"))
 });
 
 router.get('/caught-pokemons', checkAuth, (req, res) => {
@@ -42,6 +43,7 @@ router.put('/', checkAuth, (req, res) => {
 router.get('/:id', (req, res) => {
     Pokemon.findOne({number: req.params.id})
         .then(pokemon => res.json(pokemon))
+        .catch(() => res.status(500).send("There was a problem with finding pokemon"))
 });
 
 module.exports = router;
