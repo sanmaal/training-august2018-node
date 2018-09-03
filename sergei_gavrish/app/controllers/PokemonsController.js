@@ -16,8 +16,6 @@ router.get(
     .build()
     .use(),
   (req, res) => {
-    if(req.headers['x-access-token']) return res.redirect('pokemons/user');
-
     const { _page, _limit } = req.query;
     Pokemon.find()
       .skip(_page * _limit - _limit)
@@ -27,7 +25,8 @@ router.get(
       ))
       .catch( err => {
         res.status(500).send('Something went wrong');
-        return console.error(err)});
+        return console.error(err);
+      });
 });
 
 router.get(
@@ -43,7 +42,7 @@ router.get(
       .skip(_page * _limit - _limit)
       .limit(parseInt(_limit))
       .populate('catchedByUsers', 'name')
-      .then( (pokemons) => res.status(200).send(pokemons))
+      .then( pokemons => res.status(200).send(pokemons))
       .catch( err => {
         res.status(500).send('Something went wrong');
         return console.error(err);
@@ -62,7 +61,7 @@ router.get(
 
     User.findById(req.userId)
       .populate('catched', 'name id')
-      .then( (user) => {
+      .then( user => {
         if(!user) return res.status(404).send('User not found');
         const { catched } = user;
         return res.status(200).send(catched.slice(_page * _limit - _limit, _page * _limit));
@@ -86,8 +85,8 @@ router.put(
     Pokemon.findByIdAndUpdate(req.body.id, { $push: { catchedByUsers: req.userId }}, { 'new': true})
       .then( () => console.log('Pokemon catched'))
       .then( () => User.findByIdAndUpdate(req.userId, { $push: { catched: req.body.id }}, { 'new': true}))
-      .then( (response) => res.status(200).send(response))
-      .catch( (err) => {
+      .then( response => res.status(200).send(response))
+      .catch( err => {
         res.status(500).send('Something went wrong');
         return console.error(err);
       });
@@ -102,13 +101,13 @@ router.get(
   (req, res) => {
 
     Pokemon.findOne( {id: req.params.pokemonId} )
-      .then( (pokemon) => {
+      .then( pokemon => {
         if(!pokemon) return res.status(404).send('There is no pokemon with this id');
         return res.status(200).send(pokemon);
       })
       .catch( err => {
         res.status(500).send('Something went wrong');
-        return console.error(err)
+        return console.error(err);
       });
 
 });

@@ -1,7 +1,7 @@
 import express from 'express';
 import bodyParser from 'body-parser';
 import Pokemon from '../models/Pokemon';
-import { pokemons } from '../../pokemons.json';
+import { pokemons } from '../../../pokemons.json';
 
 const router = express.Router();
 
@@ -14,7 +14,10 @@ router.post('/', async (req, res) => {
   .then( () => (
     res.status(200).send('Database have been initialised')
   ))
-  .catch( error => res.status(500).send(error));
+  .catch( err => {
+    res.status(500).send('Something went wrong');
+    return console.error(err);
+  });
 });
 
 export default router;
