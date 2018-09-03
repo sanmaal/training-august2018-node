@@ -1,0 +1,17 @@
+if user
+	h1= user.name
+	p you are logged)
+	hr
+	a(href='/users/logout') Exit if you wish
+else
+	h1 Register user
+	form(method='post', action='/users/registration')
+		input(type='text', name='username')
+		input(type='text', name='email')
+		input(type='password', name='password')
+		input(type='submit')
+	h1 Login user
+	form(method='post', action='/users/login')
+		input(type='text', name='email')
+		input(type='password', name='password')
+		input(type='submit')
