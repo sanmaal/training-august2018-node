@@ -1,6 +1,6 @@
 'use strict';
 
-require('dotenv').config({path: '../.env'});
+require('dotenv').config();
 
 const
   mongoose = require('mongoose'),
@@ -23,20 +23,12 @@ const removePokemons = () => (
     })
 );
 
-const createPokemons = () => {
-  let pokemons = [];
-  data.pokemons.map(item => {
-    const pokemon = new Pokemon({
-      name: item.name,
-      id: item.id
-    });
-    pokemons.push(pokemon);
-  });
-  return Pokemon.collection.insert(pokemons)
+const createPokemons = () => (
+  Pokemon.insertMany(data.pokemons)
     .then(() => {
-        console.log('pokemons loaded');
-      })
-};
+      console.log('pokemons loaded');
+    })
+);
 
 const closeConnection = () => (
   mongoose.disconnect()
