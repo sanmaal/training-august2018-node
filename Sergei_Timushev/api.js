@@ -3,9 +3,12 @@
 const mongoose = require('mongoose');
 const crypto = require('crypto');
 const mainBD = require('./config/bdconfig').mainBD;
-mongoose.connect(mainBD, { useNewUrlParser: true });
 const User = require('./db/models/User');
 const Pokemon = require('./db/models/Pokemon');
+
+mongoose.connect(mainBD, { useNewUrlParser: true })
+  .then(() => console.log('connection success'))
+  .catch(err => console.log(err)); 
 
 //User Api
 
