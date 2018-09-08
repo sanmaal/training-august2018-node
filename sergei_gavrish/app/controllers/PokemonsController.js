@@ -63,11 +63,18 @@ router.get(
     const { _page, _limit } = req.query;
 
     User.findById(req.userId)
-      .populate('catched', 'name id')
+      .populate({
+        path: 'catched',
+        populate: {
+          path: 'id',
+          model: 'Pokemon'
+        }
+      })
       .then( user => {
+        console.log(user);
         if(!user) return res.status(404).send('User not found');
         const { catched } = user;
-        return res.status(200).send(catched.slice(_page * _limit - _limit, _page * _limit));
+        return res.status(200).send(catched);
       })
       .catch( err => {
         res.status(500).send('Something went wrong');
@@ -87,7 +94,11 @@ router.put(
 
     Pokemon.findByIdAndUpdate(req.body.id, { $push: { catchedByUsers: req.userId }}, { 'new': true})
       .then( () => console.log('Pokemon catched'))
-      .then( () => User.findByIdAndUpdate(req.userId, { $push: { catched: req.body.id }}, { 'new': true}))
+      .then( () => User.findByIdAndUpdate(
+        req.userId,
+        { $push: { catched: { id: req.body.id, date: new Date().toLocaleDateString() } }},
+        { 'new': true}
+      ))
       .then( response => res.status(200).send(response))
       .catch( err => {
         res.status(500).send('Something went wrong');
