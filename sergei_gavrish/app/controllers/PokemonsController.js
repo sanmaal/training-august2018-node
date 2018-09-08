@@ -17,7 +17,10 @@ router.get(
     .use(),
   (req, res) => {
     const { _page, _limit } = req.query;
-    Pokemon.find()
+    Pokemon.find({},{
+      __v:0,
+      catchedByUsers: 0,
+    })
       .skip(_page * _limit - _limit)
       .limit(parseInt(_limit))
       .then( pokemons => (
@@ -100,7 +103,10 @@ router.get(
     .use(),
   (req, res) => {
 
-    Pokemon.findOne( {id: req.params.pokemonId} )
+    Pokemon.findOne({_id: req.params.pokemonId}, {
+      __v:0,
+      catchedByUsers: 0,  
+    })
       .then( pokemon => {
         if(!pokemon) return res.status(404).send('There is no pokemon with this id');
         return res.status(200).send(pokemon);

@@ -17,10 +17,17 @@ const UserSchema = new mongoose.Schema({
     type: String,
     required: true
   },
-  catched: [{
-    type: mongoose.Schema.Types.ObjectId,
-    ref: 'Pokemon'
-  }]
+  catched: [
+    {
+      id: {
+        type: mongoose.Schema.Types.ObjectId,
+        ref: 'Pokemon'
+      },
+      date: {
+        type: Object
+      }
+    }
+  ]
 });
 
 export default mongoose.model('User', UserSchema);
