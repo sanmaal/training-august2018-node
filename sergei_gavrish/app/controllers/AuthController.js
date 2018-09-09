@@ -26,8 +26,6 @@ router.post(
     
     User.create({
       login: req.body.login,
-      email: req.body.email,
-      name: req.body.name,
       password: hashedPassword
     })
       .then( user => {
@@ -61,8 +59,6 @@ router.post(
           .header('x-access-token', token)
           .send({
             auth: true,
-            name: user.name,
-            email: user.email,
             message: 'User loged in'
           });
       })

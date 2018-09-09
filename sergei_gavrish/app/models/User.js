@@ -5,29 +5,15 @@ const UserSchema = new mongoose.Schema({
     type: String,
     required: true
   },
-  email: {
-    type: String,
-    required: true
-  },
-  name: {
-    type: String,
-    required: true
-  },
   password: {
     type: String,
     required: true
   },
-  catched: [
-    {
-      id: {
-        type: mongoose.Schema.Types.ObjectId,
-        ref: 'Pokemon'
-      },
-      date: {
-        type: Object
-      }
-    }
-  ]
+  catchedPokemons: [{
+      type: mongoose.Schema.Types.ObjectId,
+      ref: 'Pokemon'
+  }],
+  datesOfCapture: mongoose.Schema.Types.Mixed,
 });
 
 export default mongoose.model('User', UserSchema);
