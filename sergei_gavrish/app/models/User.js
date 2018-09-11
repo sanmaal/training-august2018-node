@@ -13,7 +13,14 @@ const UserSchema = new mongoose.Schema({
       type: mongoose.Schema.Types.ObjectId,
       ref: 'Pokemon'
   }],
-  datesOfCapture: mongoose.Schema.Types.Mixed,
+  datesOfCapture: [{
+    id: {
+      type: String
+    },
+    date: {
+      type: Date
+    }, 
+  }],
 });
 
 export default mongoose.model('User', UserSchema);

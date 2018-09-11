@@ -65,12 +65,22 @@ router.get(
     User.findById(req.userId)
       .populate({
         path: 'catchedPokemons',
-        model: 'Pokemon'
+        model: 'Pokemon',
+        select: '_id name id'
       })
       .then( user => {
         if(!user) return res.status(404).send('User not found');
         const { catchedPokemons, datesOfCapture } = user;
-        return res.status(200).send({catchedPokemons, datesOfCapture});
+        const paiload = [];
+        catchedPokemons.map( (pokemon, index) => {
+          paiload.push({
+            _id: pokemon._id,
+            name: pokemon.name,
+            id: pokemon.id,
+            date: datesOfCapture[index].id ? datesOfCapture[index].date : null,
+          });
+        })
+        return res.status(200).send(paiload);
       })
       .catch( err => {
         res.status(500).send('Something went wrong');
@@ -87,16 +97,22 @@ router.put(
   authorization,
   checkPokemon,
   (req, res) => {
+    console.log('ddd');
 
     Pokemon.findByIdAndUpdate(req.body.id, { $push: { catchedByUsers: req.userId }}, { 'new': true})
       .then( () => User.findByIdAndUpdate(
           req.userId,
           { 
-            $push: { catchedPokemons: req.body.id },
-            datesOfCapture: {
-              [req.body.id]: new Date(),
-            }
-          },
+            $push: 
+              {
+                catchedPokemons: req.body.id,
+                datesOfCapture: 
+                  {
+                    id: req.body.id,
+                    date: new Date(),
+                  }
+              }
+            },
           { 'new': true}
         )
       )
