@@ -5,22 +5,22 @@ const UserSchema = new mongoose.Schema({
     type: String,
     required: true
   },
-  email: {
-    type: String,
-    required: true
-  },
-  name: {
-    type: String,
-    required: true
-  },
   password: {
     type: String,
     required: true
   },
-  catched: [{
-    type: mongoose.Schema.Types.ObjectId,
-    ref: 'Pokemon'
-  }]
+  catchedPokemons: [{
+      type: mongoose.Schema.Types.ObjectId,
+      ref: 'Pokemon'
+  }],
+  datesOfCapture: [{
+    id: {
+      type: String
+    },
+    date: {
+      type: Date
+    }, 
+  }],
 });
 
 export default mongoose.model('User', UserSchema);

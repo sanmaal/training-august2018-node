@@ -5,6 +5,7 @@ import bcrypt from 'bcryptjs';
 import User from '../models/User';
 import { KEY } from '../config/config';
 import userUrlBuilder from '../utils/urlbuilders/UserUrlBuilder';
+import { checkUser } from '../middleware/CheckUser';
 
 const router = express.Router();
 
@@ -16,6 +17,7 @@ router.post(
     .build()
     .signup()
     .use(),
+    checkUser,
   async (req, res) => {
     const hashedPassword = await bcrypt.genSalt()
       .then( salt => bcrypt.hash(req.body.password, salt))
@@ -26,8 +28,6 @@ router.post(
     
     User.create({
       login: req.body.login,
-      email: req.body.email,
-      name: req.body.name,
       password: hashedPassword
     })
       .then( user => {
@@ -54,16 +54,14 @@ router.post(
         if(!validPassword) return res.status(400).send({ auth: false, token: null});
 
         const token = jwt.sign({ id: user._id }, KEY, {
-          expiresIn: 100000
+          expiresIn: 86400
         });
 
         res
-          .header('x-access-token', token)
           .send({
             auth: true,
-            name: user.name,
-            email: user.email,
-            message: 'User loged in'
+            tokenId: token,
+            expiresIn: 86400,
           });
       })
       .catch( err => {
