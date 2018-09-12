@@ -80,7 +80,7 @@ router.get(
             date: datesOfCapture[index].id ? datesOfCapture[index].date : null,
           });
         })
-        return res.status(200).send(paiload);
+        return res.status(200).send(paiload.slice(_page * _limit - _limit, _page * _limit));
       })
       .catch( err => {
         res.status(500).send('Something went wrong');
@@ -97,7 +97,6 @@ router.put(
   authorization,
   checkPokemon,
   (req, res) => {
-    console.log('ddd');
 
     Pokemon.findByIdAndUpdate(req.body.id, { $push: { catchedByUsers: req.userId }}, { 'new': true})
       .then( () => User.findByIdAndUpdate(
@@ -116,14 +115,35 @@ router.put(
           { 'new': true}
         )
       )
-      .then( response => res.status(200).send(response))
+      .then( () => User
+        .findById(req.userId)
+        .populate({
+        path: 'catchedPokemons',
+        model: 'Pokemon',
+        select: '_id name id'
+      }))
+      .then( user => {
+        const { catchedPokemons, datesOfCapture } = user;
+        const paiload = [];
+        catchedPokemons.filter( (pokemon, index) => {
+          if (req.body.id === `${pokemon._id}`) {
+            paiload.push({
+              _id: pokemon._id,
+              name: pokemon.name,
+              id: pokemon.id,
+              date: datesOfCapture[index].id ? datesOfCapture[index].date : null,
+            });
+          }
+        });
+        res.status(200).send(paiload);
+      })
       .catch( err => {
         res.status(500).send('Something went wrong');
         return console.error(err);
       });
-
-});
-
+      
+    });
+    
 router.get(
   pokemonUrlBuilder
     .build()
