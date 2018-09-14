@@ -15,6 +15,7 @@ exports.getPokemonById = (req, res) => {
 };
 
 exports.pagination = (req, res) => {
+  const isAuth = !!(req.headers['x-access-token']);
   const
     query = url_parse(req.url, true).query,
     perPage = query.perPage? +query.perPage: 10,
@@ -23,16 +24,19 @@ exports.pagination = (req, res) => {
     .skip(perPage * (page - 1))
     .limit(perPage)
     .sort('id')
-    .select({ 'catchInfo.userId': 0, '_id': 0, '__v': 0 })
+    .select(isAuth? { 'catchInfo.userId': 0, '_id': 0, '__v': 0 }: { 'catchInfo': 0, '_id': 0, '__v': 0 })
     .then(pokemons => {
       return { count: Pokemon.countDocuments(req.details), pokemons }
     })
     .then(({ count, pokemons }) => {
-      res.status(200).json({
-        pokemons: pokemons,
-        page: page,
-        pages: count / perPage
-      })
+      count
+        .then(count =>
+          res.status(200).json({
+            pokemons: pokemons,
+            page: page,
+            pages: count / perPage
+          })
+        )
     })
     .catch(err => {
       return handleError(err, res);
