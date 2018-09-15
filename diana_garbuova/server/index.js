@@ -33,4 +33,6 @@ async function initMongoose() {
   }
 }
 
-module.exports = start;
+start()
+.then((port) => console.log(`Server is started on port: ${port}`))
+.catch((err) => console.error(`Server is down: ${err}`));

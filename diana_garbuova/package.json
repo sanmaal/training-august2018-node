@@ -1,9 +1,8 @@
 {
   "name": "node-server",
   "version": "1.0.0",
-  "main": "index.js",
   "scripts": {
-    "start": "nodemon -r dotenv/config index.js",
+    "start": "nodemon -r dotenv/config ./server/index.js",
     "DBinit": "node -r dotenv/config ./initMongoBoy.js"
   },
   "author": "Diana Garbuzova",

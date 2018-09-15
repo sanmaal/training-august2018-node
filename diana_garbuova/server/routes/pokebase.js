@@ -16,8 +16,8 @@ router.get('/:page?', async(req, res) => {
   res.status(200).send(pokemons);
 });
 
-router.post('/:pokename', checkToken, async (req, res) => {
-  await Pokemon.findOne({ name: req.params.pokename }, (err, pokemon) => {
+router.post('/:pokename', checkToken, (req, res) => {
+  Pokemon.findOne({ name: req.params.pokename }, (err, pokemon) => {
     if (pokemon) {
       User.findByIdAndUpdate(
         req.userId,
@@ -25,6 +25,9 @@ router.post('/:pokename', checkToken, async (req, res) => {
       )
       .then(() => {
         res.status(200).send(`${req.params.pokename} was cathed`);
+      })
+      .catch(() => {
+        res.status(404).send('User not found');
       });
     } else {
       res.status(500).send('Current pokemon does not exist');
