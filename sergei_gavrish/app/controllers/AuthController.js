@@ -31,7 +31,7 @@ router.post(
       password: hashedPassword
     })
       .then( user => {
-        return res.status(200).send('Everything good. You\'re singed up')
+        return res.status(200).send({ message: 'Everything good. You\'re singed up'})
     })
       .catch( err => {
         res.status(500).send('Something went wrong');
