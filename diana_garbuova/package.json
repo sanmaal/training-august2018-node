@@ -1,0 +1,21 @@
+{
+  "name": "node-server",
+  "version": "1.0.0",
+  "scripts": {
+    "start": "nodemon -r dotenv/config ./server/index.js",
+    "DBinit": "node -r dotenv/config ./initMongoBoy.js"
+  },
+  "author": "Diana Garbuzova",
+  "license": "ISC",
+  "dependencies": {
+    "bcryptjs": "^2.4.3",
+    "body-parser": "^1.18.3",
+    "dotenv": "^6.0.0",
+    "express": "^4.16.3",
+    "jsonwebtoken": "^8.3.0",
+    "mongoose": "^5.2.9"
+  },
+  "devDependencies": {
+    "nodemon": "^1.18.3"
+  }
+}
