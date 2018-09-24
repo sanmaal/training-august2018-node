@@ -9,7 +9,7 @@
 `npm install`
 `npm run dev`
 
-Go to [GitHub](localhost:3001/api/pokemons?page=1&amount=10)
+Go to [localhost:3001/api/pokemons?page=1&amount=10](http://localhost:3001/api/pokemons?page=1&amount=10)
 
 - - - -
 
