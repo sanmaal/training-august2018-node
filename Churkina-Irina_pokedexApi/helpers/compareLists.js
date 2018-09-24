@@ -11,6 +11,5 @@ module.exports = function(indexes, compareWith) {
       }
     });
   }
-  console.log(resultArray);
   return resultArray;
 };

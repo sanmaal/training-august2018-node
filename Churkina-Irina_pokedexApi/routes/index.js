@@ -51,19 +51,21 @@ router.delete("/pokemons/:id", function(req, res, next) {
 });
 
 router.post("/newUser", function(req, res, next) {
+  User.findOne({ username: req.body.name })
+    .then(user => {
+      if (user) {
+        res.status(403).send({ userExists: true });
+      }
+    })
+    .catch(err => {
+      console.log(err);
+    });
+
   let user = new User({
     username: req.body.name,
     password: bcrypt.hashSync(req.body.password),
     caughtPokemons: []
   });
-
-  User.findOne({ username: user.username })
-    .then(user => {
-      res.status(403).send(`User '${user.username}' already exists`);
-    })
-    .catch(err => {
-      console.log(err);
-    });
 
   user
     .save()
@@ -87,10 +89,10 @@ router.post("/login", function(req, res, next) {
   User.findOne({ username: req.body.name })
     .then(data => {
       if (bcrypt.compareSync(req.body.password, data.password)) {
-        let userToken = createToken({ id: data._id });
-        Token.findOneAndUpdate({ userId: data._id }, { token: userToken })
+		let userToken = createToken({ id: data._id });
+        Token.findOneAndUpdate({ userId: data._id, token: userToken })
           .then(data => {
-            console.log("Token successfully created");
+			console.log("Token successfully created");
           })
           .catch(err => {
             console.log(err);
@@ -180,7 +182,6 @@ router.post("/catchPokemon", function(req, res, next) {
       User.findOne({ _id: data.id })
         .then(user => {
           if (!user.caughtPokemons.includes(req.body)) {
-            console.log("AAAAAAAA");
             user.caughtPokemons.push(req.body);
             user.save();
             Pokemon.findOne({ id: req.body.id }).then(data => {
@@ -213,8 +214,6 @@ router.get("/leavePokemon/:id", function(req, res, next) {
             "id",
             req.params.id
           );
-          console.log("target");
-          console.log(targetPokemon);
           if (targetPokemon) {
             const index = user.caughtPokemons.indexOf(targetPokemon);
             user.caughtPokemons.splice(index, index);

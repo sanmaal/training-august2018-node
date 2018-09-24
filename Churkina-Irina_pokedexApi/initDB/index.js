@@ -3,8 +3,6 @@ const mongoose = require("mongoose");
 const futureData = require('../data/pokemons.json');
 const Pokemon = require('../models/pokemon');
 
-console.log(`${process.env.DB_HOST || 'localhost'}      ${process.env.DB_PORT || '27017'}      `)
-
 mongoose.connect(`mongodb://${process.env.DB_HOST || 'localhost'}:${process.env.DB_PORT || 27017}/pokemonsList`, {
 	useNewUrlParser: true
 })
