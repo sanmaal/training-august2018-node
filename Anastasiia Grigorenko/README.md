@@ -1,10 +1,10 @@
-##Backend for pokedex
+## Backend for pokedex
 
-###Initializing the database
+### Initializing the database
 
 `npm run init-database`
 
-###Run server
+### Run server
 
 `npm install`
 `npm run dev`
@@ -13,7 +13,7 @@ Go to [GitHub](localhost:3001/api/pokemons?page=1&amount=10)
 
 - - - -
 
-###Endpoints:
+### Endpoints:
 
 `/api/pokemons?page=1&amount=10` - get all pokemons from page 1 in amount 10
 `/api/pokemons/1` - get a pokemon with id=1
