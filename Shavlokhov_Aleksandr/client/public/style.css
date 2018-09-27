@@ -1,0 +1,43 @@
+html, body{
+  font-family : sans-serif;
+  background: #e2e1e0;
+  font-size: 20px;
+}
+.wrapper{
+  text-align: center;
+}
+
+.pokemon-item {
+  max-width: 490px;
+  background-color: #fff;
+  padding : 8px;
+  box-sizing: border-box;
+  cursor : pointer;
+  box-shadow: 0 1px 3px rgba(0,0,0,0.12), 0 1px 2px rgba(0,0,0,0.24);
+  margin: 8px;
+  display: inline-block;
+  text-transform: uppercase;
+}
+
+.pokemon-name {
+  margin-bottom: 10px;
+}
+
+.catchBtn {
+  border: none;
+  width: 100%;
+  height: 30px;
+  font-size: 20px;
+  cursor: pointer;
+}
+
+.nav-btn, .loadmore-btn {
+  margin-top: 10px;
+  width: 200px;
+  height: 50px;
+  font-size: 20px;
+}
+
+.auth-field {
+  display: block;
+}
